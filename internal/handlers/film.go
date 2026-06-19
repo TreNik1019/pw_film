@@ -25,17 +25,14 @@ func NewFilmHandler(repo repository.FilmRepository) *FilmHandler {
 // CreateFilm handles POST /api/v1/films
 func (h *FilmHandler) CreateFilm(c *gin.Context) {
 	var input models.Film
-	// Gin automatically validates structural requirements using the model validation tags
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	if err := h.repo.Create(&input); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create film: " + err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusCreated, input)
 }
 
@@ -46,7 +43,6 @@ func (h *FilmHandler) GetFilms(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not fetch films: " + err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, films)
 }
 
@@ -58,7 +54,6 @@ func (h *FilmHandler) GetFilmByID(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid film ID format"})
 		return
 	}
-
 	film, err := h.repo.GetByID(uint(id))
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -68,6 +63,41 @@ func (h *FilmHandler) GetFilmByID(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not retrieve film: " + err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, film)
+}
+
+// UpdateFilm handles PUT /api/v1/films/:id
+func (h *FilmHandler) UpdateFilm(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid film ID format"})
+		return
+	}
+	var input models.Film
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	input.ID = uint(id)
+	if err := h.repo.Update(&input); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update film: " + err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, input)
+}
+
+// DeleteFilm handles DELETE /api/v1/films/:id
+func (h *FilmHandler) DeleteFilm(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid film ID format"})
+		return
+	}
+	if err := h.repo.Delete(uint(id)); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not delete film: " + err.Error()})
+		return
+	}
+	c.Status(http.StatusNoContent)
 }

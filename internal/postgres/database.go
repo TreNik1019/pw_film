@@ -67,6 +67,12 @@ func InitDB() {
 
 	// Datenbank mit CSV-Daten befüllen, falls leer
 	SeedDatabase(DB)
+
+	// Sequenz immer synchronisieren – falls Daten mit expliziten IDs eingefügt wurden
+	// (z.B. per CSV-Seeding), kann die Sequenz hinter dem tatsächlichen MAX(id) liegen.
+	if err := DB.Exec("SELECT setval(pg_get_serial_sequence('film', 'id'), COALESCE((SELECT MAX(id) FROM film), 0))").Error; err != nil {
+		log.Printf("Warnung: Sequenz konnte nicht synchronisiert werden: %v", err)
+	}
 }
 
 func getCSVPath() string {
@@ -167,5 +173,13 @@ func SeedDatabase(db *gorm.DB) {
 
 	if insertedCount > 0 {
 		log.Printf("Datenbank erfolgreich mit %d Filmen aus der CSV-Datei befüllt!", insertedCount)
+
+		// Sequenz auf den höchsten vorhandenen ID-Wert zurücksetzen,
+		// damit Auto-Increment-INSERTs nicht mit den CSV-IDs kollidieren.
+		if err := db.Exec("SELECT setval(pg_get_serial_sequence('film', 'id'), (SELECT MAX(id) FROM film))").Error; err != nil {
+			log.Printf("Warnung: Sequenz konnte nicht zurückgesetzt werden: %v", err)
+		} else {
+			log.Println("PostgreSQL-Sequenz für 'film' erfolgreich zurückgesetzt.")
+		}
 	}
 }

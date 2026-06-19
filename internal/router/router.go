@@ -19,6 +19,8 @@ func SetupRouter(filmHandler *handlers.FilmHandler) *gin.Engine {
 		v1.POST("/films", filmHandler.CreateFilm)
 		v1.GET("/films", filmHandler.GetFilms)
 		v1.GET("/films/:id", filmHandler.GetFilmByID)
+		v1.PUT("/films/:id", filmHandler.UpdateFilm)
+		v1.DELETE("/films/:id", filmHandler.DeleteFilm)
 	}
 
 	return r
