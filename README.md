@@ -42,6 +42,17 @@ Programmierworkshop: REST Schnittstelle in Go
 
 ### Optional: OIDC mit Keycloak
 
+- *Nicht geschafft*
+
 ### Einfacher Integrationstest
 
+- **Datenbank-Integrationstests**: Vollständige Tests gegen eine echte PostgreSQL-Datenbank, aufgeteilt in fokussierte Testdateien unter `tests/integration/`:
+  - `create_test.go`: Testet das Anlegen (`POST /api/v1/films`).
+  - `read_test.go`: Testet das Auslesen (`GET /api/v1/films`, `GET /api/v1/films/:id`, `404 Not Found`).
+  - `update_test.go`: Testet das Aktualisieren (`PUT /api/v1/films/:id`).
+  - `delete_test.go`: Testet das Löschen (`DELETE /api/v1/films/:id`).
+  - `lifecycle_test.go`: Testet den gesamten CRUD-Lebenszyklus in einem Durchlauf.
+
 ## Prompts/Requests an KI-Agent/en
+
+- Die vollständige, chronologische Liste aller relevanten(kopien und Serverprobleme ausgeschlossen) heute verwendeten Prompts befindet sich in der Datei [Prompts.md](file:///C:/workspace/pw_film/Prompts.md).
