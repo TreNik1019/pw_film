@@ -181,3 +181,39 @@ Teile die Integrationstests aus der großen Einzeldatei in separate, thematisch 
 ## Prompt 30
 
 Überprüfe die GitHub-Actions-CI-Konfigurationsdatei. Stellen wir sicher, dass alle Run-Befehle stimmen und die Tests (inkl. PostgreSQL-Service) dort korrekt ausgeführt anstatt übersprungen werden.
+
+---
+
+## Prompt 31
+
+Erkläre, wie Bruno in dieses Projekt integriert werden kann. Noch nicht umsetzen, sondern zuerst die Vorgehensweise beschreiben.
+
+---
+
+## Prompt 32
+
+Erstelle den Bruno-Ordner anhand der vorhandenen Collection in `extras/compose/bruno` für REST.
+
+---
+
+## Prompt 33
+
+Prüfe, ob Bruno mit `.bru`-Dateien funktioniert, oder ob stattdessen YAML-Dateien sinnvoller sind. Erstelle außerdem einzelne Request-Dateien für verschiedene ID-Szenarien.
+
+---
+
+## Prompt 34
+
+Erstelle die Bruno-Requests als YAML-Dateien anhand Beispielcode.
+
+---
+
+## Prompt 35
+
+Passe die alte `opencollection.yml` an das bisherige Schema an, aber passend für dieses Projekt.
+
+---
+
+## Prompt 36
+
+Behebe den Fehler im Bruno-Request `Film anlegen`, bei dem Bruno meldet, dass die Request-Datei möglicherweise beschädigt ist.
