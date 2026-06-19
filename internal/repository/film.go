@@ -11,6 +11,8 @@ type FilmRepository interface {
 	Create(film *models.Film) error
 	GetAll() ([]models.Film, error)
 	GetByID(id uint) (*models.Film, error)
+	Update(film *models.Film) error
+	Delete(id uint) error
 }
 
 type gormFilmRepository struct {
@@ -25,6 +27,16 @@ func NewFilmRepository(db *gorm.DB) FilmRepository {
 // Create adds a new film to the database
 func (r *gormFilmRepository) Create(film *models.Film) error {
 	return r.db.Create(film).Error
+}
+
+// Update updates an existing film
+func (r *gormFilmRepository) Update(film *models.Film) error {
+	return r.db.Save(film).Error
+}
+
+// Delete removes a film by its ID
+func (r *gormFilmRepository) Delete(id uint) error {
+	return r.db.Delete(&models.Film{}, id).Error
 }
 
 // GetAll returns all films from the database

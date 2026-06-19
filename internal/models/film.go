@@ -19,5 +19,5 @@ type Film struct {
 
 // TableName überschreibt den Standard-Plural von GORM
 func (Film) TableName() string {
-	return "film" // Exakter Name der Tabelle in deiner DB
+	return "film"
 }

@@ -125,7 +125,7 @@ func SeedDatabase(db *gorm.DB) {
 		version, _ := strconv.Atoi(record[1])
 		titel := record[2]
 		art := record[3]
-		
+
 		// Datum parsen (Format: YYYY-MM-DD)
 		erschDatum, errDate := time.Parse("2006-01-02", record[4])
 		if errDate != nil {

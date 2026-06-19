@@ -1,0 +1,23 @@
+# Secrets and credentials
+# -------------------------------------------------------------------
+# PostgreSQL password (Docker secret file)
+/internal/postgres/pw.txt
+
+# SSL certificates and keys (if stored in the repo)
+/internal/postgres/tls/*.crt
+/internal/postgres/tls/*.key
+
+# Environment files that may contain secrets
+.env
+.env.*
+
+# Any other secret files (generic patterns)
+*.secret
+*.pem
+*.p12
+
+# IDE / OS files (optional, but safe to keep)
+# .vscode/
+# .idea/
+# Thumbs.db
+# desktop.ini
