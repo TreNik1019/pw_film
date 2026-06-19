@@ -21,3 +21,9 @@
 # .idea/
 # Thumbs.db
 # desktop.ini
+
+# Local Go build/cache output
+.gocache/
+.gomodcache/
+server
+server.exe
