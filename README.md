@@ -1,8 +1,6 @@
-# pw_film
-
-Programmierworkshop: REST Schnittstelle in Go
-
 # Programmierworkshop am 19.6.2026
+
+pw_film - Programmierworkshop: REST Schnittstelle in Go
 
 ## Namen
 
