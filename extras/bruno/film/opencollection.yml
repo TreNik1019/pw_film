@@ -1,0 +1,73 @@
+opencollection: 1.0.0
+
+info:
+  name: film
+
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  auth:
+    type: none
+  variables:
+    - name: baseUrl
+      value: http://localhost:8080
+    - name: restUrl
+      value: "{{baseUrl}}/api/v1/films"
+    - name: filmId
+      value: "1"
+
+    # Optional, falls spaeter Keycloak/OIDC verwendet wird.
+    - name: keycloakUrl
+      value: https://localhost:8843
+      disabled: true
+    - name: realm
+      value: film
+      disabled: true
+    - name: realmUrl
+      value: "{{keycloakUrl}}/realms/{{realm}}"
+      disabled: true
+    - name: oidcUrl
+      value: "{{realmUrl}}/protocol/openid-connect"
+      disabled: true
+    - name: oidcAuthUrl
+      value: "{{oidcUrl}}/auth"
+      disabled: true
+    - name: oidcTokenUrl
+      value: "{{oidcUrl}}/token"
+      disabled: true
+    - name: authUrl
+      value: "{{baseUrl}}/auth"
+      disabled: true
+    - name: tokenUrl
+      value: "{{authUrl}}/token"
+      disabled: true
+    - name: clientId
+      value: film-client
+      disabled: true
+    - name: clientSecret
+      value: ""
+      disabled: true
+    - name: username
+      value: ""
+      disabled: true
+    - name: password
+      value: ""
+      disabled: true
+
+bundled: false
+
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

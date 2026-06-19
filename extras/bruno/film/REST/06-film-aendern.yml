@@ -1,0 +1,53 @@
+info:
+  name: Film aendern
+  type: http
+  seq: 6
+
+http:
+  method: PUT
+  url: "{{restUrl}}/:id"
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+  params:
+    - name: id
+      value: "1"
+      type: path
+  body:
+    type: json
+    data: |
+      {
+        "version": 1,
+        "titel": "Inception",
+        "art": "BlueRay",
+        "erscheinungsdatum": "2010-07-16T00:00:00Z",
+        "genre": "ScienceFiction",
+        "rating": 9.0,
+        "verfuegbar": true,
+        "preis": 14.99,
+        "schlagwoerter": "[\"AUFREGEND\",\"SPANNEND\"]"
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.headers['content-type']
+      operator: matches
+      value: ^application\/json(; charset=utf-8)?$
+    - expression: res.body.id
+      operator: eq
+      value: "1"
+    - expression: res.body.rating
+      operator: eq
+      value: "9"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

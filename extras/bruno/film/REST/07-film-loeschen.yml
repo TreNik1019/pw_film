@@ -1,0 +1,28 @@
+info:
+  name: Film loeschen
+  type: http
+  seq: 7
+
+http:
+  method: DELETE
+  url: "{{restUrl}}/:id"
+  headers:
+    - name: Accept
+      value: application/json
+  params:
+    - name: id
+      value: "1"
+      type: path
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

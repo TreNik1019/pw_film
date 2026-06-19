@@ -1,0 +1,45 @@
+info:
+  name: Film anlegen
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{restUrl}}"
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |
+      {
+        "titel": "Blade Runner 2049",
+        "art": "4K",
+        "erscheinungsdatum": "2017-10-06T00:00:00Z",
+        "genre": "ScienceFiction",
+        "rating": 8.0,
+        "verfuegbar": true,
+        "preis": 18.99,
+        "schlagwoerter": "[\"SPANNEND\",\"ATMOSPHAERISCH\"]"
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
+    - expression: res.headers['content-type']
+      operator: matches
+      value: ^application\/json(; charset=utf-8)?$
+    - expression: res.body.titel
+      operator: eq
+      value: Blade Runner 2049
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
