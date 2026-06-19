@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"pw_film/internal/config"
-	"pw_film/internal/database"
 	"pw_film/internal/handlers"
+	"pw_film/internal/postgres"
 	"pw_film/internal/repository"
 	"pw_film/internal/router"
 )
@@ -17,13 +17,10 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// 2. Setup database connection and run auto-migration
-	db, err := database.InitDB(cfg)
-	if err != nil {
-		log.Fatalf("Database initialization failed: %v", err)
-	}
+	postgres.InitDB()
 
 	// 3. Initialize repository
-	filmRepo := repository.NewFilmRepository(db)
+	filmRepo := repository.NewFilmRepository(postgres.DB)
 
 	// 4. Initialize handlers
 	filmHandler := handlers.NewFilmHandler(filmRepo)
