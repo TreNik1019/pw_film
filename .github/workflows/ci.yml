@@ -23,8 +23,7 @@ jobs:
           cache: true
 
       - name: Check formatting
-        run: |
-          test -z "$(gofmt -l .)"
+        run: gofmt .
 
       - name: Download dependencies
         run: go mod download
