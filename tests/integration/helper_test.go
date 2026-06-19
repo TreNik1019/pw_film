@@ -52,6 +52,11 @@ func connectDB(t *testing.T) *gorm.DB {
 		t.Skipf("Datenbankverbindung fehlgeschlagen (DB laeuft?): %v", err)
 	}
 
+	// Wichtig: AutoMigrate ausfuehren, damit die Tabellen auch in einer frischen CI-Datenbank existieren.
+	if err := db.AutoMigrate(&models.Film{}); err != nil {
+		t.Fatalf("AutoMigrate fehlgeschlagen: %v", err)
+	}
+
 	// Sequenz synchronisieren – CSV-Seeding fuegt explizite IDs ein ohne die Sequenz zu aktualisieren.
 	// Dadurch schlagen INSERT-Statements ohne ID mit einem Duplicate-Key-Fehler fehl.
 	if err := db.Exec("SELECT setval(pg_get_serial_sequence('film', 'id'), COALESCE((SELECT MAX(id) FROM film), 0))").Error; err != nil {
