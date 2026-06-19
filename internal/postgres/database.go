@@ -20,10 +20,10 @@ func InitDB() {
 	dbName := "pw_film"
 	port := "5432"
 
-	// Passwort aus Datei 'pw' im Hauptverzeichnis lesen
-	passwordBytes, err := os.ReadFile("pw")
+	// Passwort aus Datei 'pw.txt' lesen
+	passwordBytes, err := os.ReadFile("internal/postgres/pw.txt")
 	if err != nil {
-		log.Fatalf("Fehler beim Lesen der Passwort-Datei 'pw': %v. Bitte stelle sicher, dass die Datei 'pw' im Hauptverzeichnis existiert.", err)
+		log.Fatalf("Fehler beim Lesen der Passwort-Datei 'pw.txt': %v. Bitte stelle sicher, dass die Datei 'pw.txt' unter 'internal/postgres/pw.txt' existiert.", err)
 	}
 	password := strings.TrimSpace(string(passwordBytes))
 
